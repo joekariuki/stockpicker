@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
-from crewai.memory import ShortTermMemory, LongTermMemory
+from crewai.memory import ShortTermMemory, LongTermMemory, EntityMemory
 from crewai.memory.storage.rag_storage import RAGStorage
 from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 
@@ -80,13 +80,26 @@ class StockPicker():
                     }
                 },
                 type="short_term",
-                path="./memory",
+                path="./memory/",
             ),
         )
 
         long_term_memory = LongTermMemory(
             storage=LTMSQLiteStorage(
                 db_path="./memory/long_term_memory_storage.db",
+            ),
+        )
+
+        entity_memory = EntityMemory(
+            storage=RAGStorage(
+                embedder_config={
+                    "provider": "openai",
+                    "config": {
+                        "model": "text-embedding-3-small",
+                    }
+                },
+                type="short_term",
+                path="./memory/",
             ),
         )
 
