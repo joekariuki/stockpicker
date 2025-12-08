@@ -3,6 +3,7 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from pydantic import BaseModel, Field
 from typing import List
+from tools.push_tool import PushNotificationTool
 
 class TrendingCompany(BaseModel):
     """A company that is trending in the news and drawing attention"""
@@ -43,7 +44,7 @@ class StockPicker():
 
     @agent
     def stock_picker(self) -> Agent:
-        return Agent(config=self.agents_config['stock_picker'])
+        return Agent(config=self.agents_config['stock_picker'], tools=[PushNotificationTool()])
 
     @task
     def find_trending_companies(self) -> Task:
