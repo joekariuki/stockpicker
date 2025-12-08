@@ -44,3 +44,15 @@ class StockPicker():
     @agent
     def stock_picker(self) -> Agent:
         return Agent(config=self.agents_config['stock_picker'])
+
+    @task
+    def find_trending_companies(self) -> Task:
+        return Task(config=self.tasks_config['find_trending_companies'], output_pydantic=TrendingCompanyList)
+    
+    @task
+    def research_trending_companies(self) -> Task:
+        return Task(config=self.tasks_config['research_trending_companies'], output_pydantic=TrendingCompanyResearchList)
+    
+    @task
+    def pick_best_company(self) -> Task:
+        return Task(config=self.tasks_config['pick_best_company'])
