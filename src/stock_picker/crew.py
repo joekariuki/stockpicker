@@ -1,8 +1,10 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
-from crewai.memory import ShortTermMemory
+from crewai.memory import ShortTermMemory, LongTermMemory
 from crewai.memory.storage.rag_storage import RAGStorage
+from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
+
 from pydantic import BaseModel, Field
 from typing import List
 from tools.push_tool import PushNotificationTool
@@ -79,6 +81,12 @@ class StockPicker():
                 },
                 type="short_term",
                 path="./memory",
+            ),
+        )
+
+        long_term_memory = LongTermMemory(
+            storage=LTMSQLiteStorage(
+                db_path="./memory/long_term_memory_storage.db",
             ),
         )
 
