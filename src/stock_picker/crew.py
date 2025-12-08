@@ -56,3 +56,21 @@ class StockPicker():
     @task
     def pick_best_company(self) -> Task:
         return Task(config=self.tasks_config['pick_best_company'])
+
+    @crew
+    def crew(self) -> Crew:
+        """Creates the StockPicker crew"""
+
+        manager = Agent(
+            config=self.agents_config['manager'],
+            allow_delegation=True,
+        )
+
+        return Crew(
+            agents=self.agents,
+            tasks=self.tasks,
+            process=Process.sequential,
+            verbose=True,
+            manager_agent=manager,
+        )
+
