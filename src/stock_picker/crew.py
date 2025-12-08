@@ -1,6 +1,8 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
+from crewai.memory import ShortTermMemory
+from crewai.memory.storage.rag_storage import RAGStorage
 from pydantic import BaseModel, Field
 from typing import List
 from tools.push_tool import PushNotificationTool
@@ -65,6 +67,19 @@ class StockPicker():
         manager = Agent(
             config=self.agents_config['manager'],
             allow_delegation=True,
+        )
+
+        short_term_memory = ShortTermMemory(
+            storage=RAGStorage(
+                embedder_config={
+                    "provider": "openai",
+                    "config": {
+                        "model": "text-embedding-3-small",
+                    }
+                },
+                type="short_term",
+                path="./memory",
+            ),
         )
 
         return Crew(
