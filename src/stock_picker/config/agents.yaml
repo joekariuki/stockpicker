@@ -32,6 +32,17 @@ stock_picker:
     You have a talent for synthesizing research and picking the best company for investment.
   llm: openai/gpt-4o-mini
 
+email_agent:
+  role: >
+    Email Notification Agent
+  goal: >
+    Send the investment thesis report via email to the user after the analysis is complete.
+    You read the decision.md file and send it as a formatted email.
+  backstory: >
+    You are a reliable communication specialist responsible for delivering investment reports via email.
+    You ensure that the investment thesis is properly formatted and delivered to stakeholders in a timely manner.
+  llm: openai/gpt-4o-mini
+
 manager:
   role: >
     Manager

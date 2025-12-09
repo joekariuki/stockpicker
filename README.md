@@ -21,7 +21,7 @@ _The demo may take a few seconds to load._
 
 ## How it works
 
-StockPicker runs a sequential workflow with three specialized agents and a manager agent:
+StockPicker runs a sequential workflow with four specialized agents and a manager agent:
 
 ### 1. Trending Company Finder (Financial News Analyst Agent)
 
@@ -46,6 +46,12 @@ StockPicker runs a sequential workflow with three specialized agents and a manag
 - Explains why other companies were not chosen
 - Optionally sends push notifications with the decision
 
+### 4. Email Agent (Email Notification Agent)
+
+- Reads the investment thesis report from the output file
+- Formats the report as a professional HTML email
+- Sends the investment thesis via email to the configured recipient
+
 ### Manager Agent
 
 The manager agent coordinates the workflow, delegates tasks, and keeps the system focused on selecting the best investment opportunity.
@@ -58,13 +64,14 @@ The manager agent coordinates the workflow, delegates tasks, and keeps the syste
 
 ## Features
 
-- **Multi-agent collaboration**: Three specialized agents work together while a manager coordinates tasks
+- **Multi-agent collaboration**: Four specialized agents work together while a manager coordinates tasks
 - **Advanced memory systems**:
   - Short-term memory for recent context
   - Long-term memory for persistent knowledge
   - Entity memory for tracking companies and entities
 - **Intelligent web search**: Real-time internet search using the Serper API
 - **Structured outputs**: Pydantic models ensure consistent, validated data structures
+- **Email notifications**: Investment thesis delivered via email using SendGrid API
 - **Push notifications**: Optional push notification support via Pushover API
 - **Sector-specific analysis**: Configurable sector focus (default: Technology)
 - **Comprehensive reports**: Generates JSON and Markdown reports with detailed analysis
@@ -82,6 +89,7 @@ The manager agent coordinates the workflow, delegates tasks, and keeps the syste
   - RAG storage with OpenAI embeddings (short-term and entity memory)
 - **Tools**:
   - SerperDevTool (web search)
+  - EmailTool (investment thesis email delivery)
   - PushNotificationTool (optional push notifications)
 - **Data validation**: Pydantic v2
 - **Package management**: UV (fast Python package installer)
@@ -92,6 +100,7 @@ The manager agent coordinates the workflow, delegates tasks, and keeps the syste
 - [UV](https://docs.astral.sh/uv/) package manager
 - OpenAI API key
 - Serper API key (for web search)
+- SendGrid API key (for email delivery)
 - (Optional) Pushover credentials for push notifications
 
 ## Installation
@@ -139,6 +148,11 @@ Then edit the `.env` file and fill in your API keys:
 # Required
 OPENAI_API_KEY=your_openai_api_key_here
 SERPER_API_KEY=your_serper_api_key_here
+
+# Required - for email delivery
+SENDGRID_API_KEY=your_sendgrid_api_key_here
+EMAIL_FROM=your_email@example.com
+EMAIL_TO=recipient@example.com
 
 # Optional - for push notifications
 PUSHOVER_USER=your_pushover_user_key
@@ -204,6 +218,16 @@ inputs = {
 }
 ```
 
+#### Email notifications
+
+Email notifications are enabled by default. The investment thesis is automatically sent via email after the analysis completes. Make sure you have configured the following environment variables:
+
+- `SENDGRID_API_KEY`: Your SendGrid API key
+- `EMAIL_FROM`: The sender email address (must be verified in SendGrid)
+- `EMAIL_TO`: The recipient email address
+
+The email includes a formatted HTML version of the investment thesis report.
+
 #### Enable push notifications
 
 Uncomment the push notification tool in `src/stock_picker/crew.py`:
@@ -213,7 +237,7 @@ Uncomment the push notification tool in `src/stock_picker/crew.py`:
 def stock_picker(self) -> Agent:
     return Agent(
         config=self.agents_config['stock_picker'],
-        tools=[PushNotificationTool()],  # Uncommented
+        tools=[EmailTool(), PushNotificationTool()],  # Uncommented
         memory=True
     )
 ```
@@ -231,6 +255,7 @@ stock_picker/
 │       │   ├── agents.yaml      # Agent configurations
 │       │   └── tasks.yaml       # Task definitions
 │       └── tools/
+│           ├── email_tool.py    # Email notification tool
 │           └── push_tool.py     # Push notification tool
 ├── output/                      # Generated reports
 │   ├── trending_companies.json

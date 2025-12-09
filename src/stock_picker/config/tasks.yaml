@@ -23,7 +23,7 @@ research_trending_companies:
 pick_best_company:
   description: >
     Analyze the research findings and pick the best company for investment.
-    Send a push notification to the user with the decision and 1 sentence rationale.
+    Optionally send a push notification to the user with the decision and 1 sentence rationale.
     Then respond with a detailed report on why you chose this company, and which companies were not selected.
   expected_output: >
     The chosen company and why it was chosen; the companies that were not selected and why they were not selected.
@@ -31,3 +31,13 @@ pick_best_company:
   context:
     - research_trending_companies
   output_file: output/decision.md
+
+send_email:
+  description: >
+    Read the investment thesis from output/decision.md and send it via email using the email tool.
+    The email should contain the full investment thesis report with all details about the selected company and the companies that were not selected.
+  expected_output: >
+    Confirmation that the investment thesis has been sent via email.
+  agent: email_agent
+  context:
+    - pick_best_company

@@ -8,6 +8,7 @@ from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 from pydantic import BaseModel, Field
 from typing import List
 # from .tools.push_tool import PushNotificationTool - Uncomment to enable push notifications
+from .tools.email_tool import EmailTool
 
 class TrendingCompany(BaseModel):
     """A company that is trending in the news and drawing attention"""
@@ -53,6 +54,13 @@ class StockPicker():
             config=self.agents_config['stock_picker'], 
             #tools=[PushNotificationTool()] - Uncomment to enable push notifications
             memory=True
+        )
+    
+    @agent
+    def email_agent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['email_agent'],
+            tools=[EmailTool()],
         ) 
 
     @task
@@ -66,6 +74,10 @@ class StockPicker():
     @task
     def pick_best_company(self) -> Task:
         return Task(config=self.tasks_config['pick_best_company'])
+    
+    @task
+    def send_email(self) -> Task:
+        return Task(config=self.tasks_config['send_email'])
 
     @crew
     def crew(self) -> Crew:
