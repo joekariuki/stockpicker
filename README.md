@@ -14,11 +14,10 @@ StockPicker uses a team of specialized AI agents to analyze market trends and su
 
 ![StockPicker Demo](demo.gif)
 
-_This is a technical demo, not investment advice._
+Watch StockPicker identify trending companies, run research, and make investment recommendations.
 
-> **Note**: The demo may take a few seconds to load.
->
-> Watch StockPicker identify trending companies, run research, and make investment recommendations.
+_This is a technical demo, not investment advice._
+_The demo may take a few seconds to load._
 
 ## How it works
 
