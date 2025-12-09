@@ -1,25 +1,28 @@
 <div align="center">
     <h1>StockPicker</h1>
     <p>
-        An multi-agent AI system that automatically identifies trending companies, conducts comprehensive financial research, and selects the best investment opportunities. 
+        A multi-agent AI system that identifies trending companies, runs financial research, and produces first pass stock investment ideas in under 5 minutes.
     </p>
+
 </div>
 
 ## Overview
 
-StockPicker uses a team of specialized AI agents to analyze market trends and identify promising investment opportunities. The system searches for trending companies in specified sectors, conducts deep financial research, and provides detailed investment recommendations with clear reasons why.
+StockPicker uses a team of specialized AI agents to analyze market trends and surface promising investment opportunities. It searches for trending companies in a chosen sector, runs deep financial research, and provides detailed investment recommendations with clear reasons why.
 
 ## Demo
 
 ![StockPicker Demo](demo.gif)
 
-_Note: Please wait a few seconds for the demo GIF to load and display._
+_This is a technical demo, not investment advice._
 
-_Watch the StockPicker in action as it identifies trending companies, conducts research, and makes investment recommendations._
+> **Note**: The demo may take a few seconds to load.
+>
+> Watch StockPicker identify trending companies, run research, and make investment recommendations.
 
 ## How it works
 
-StockPicker operates using a sequential process with three specialized agents:
+StockPicker runs a sequential workflow with three specialized agents and a manager agent:
 
 ### 1. Trending Company Finder (Financial News Analyst Agent)
 
@@ -28,7 +31,7 @@ StockPicker operates using a sequential process with three specialized agents:
 - Uses web search to find current market trends
 - Outputs a structured list of trending companies
 
-### 2.Financial Researcher (Senior Financial Researcher Agent)
+### 2. Financial Researcher (Senior Financial Researcher Agent)
 
 - Receives the list of trending companies
 - Conducts comprehensive research on each company
@@ -46,43 +49,43 @@ StockPicker operates using a sequential process with three specialized agents:
 
 ### Manager Agent
 
-A manager agent coordinates the workflow, delegates tasks appropriately, and ensures the goal of selecting the best investment opportunity is achieved.
+The manager agent coordinates the workflow, delegates tasks, and keeps the system focused on selecting the best investment opportunity.
 
 ### Memory systems
 
-- **Short-Term Memory**: Maintains context during the current execution session
-- **Long-Term Memory**: Persists knowledge across multiple runs using SQLite
-- **Entity Memory**: Tracks specific companies and entities to prevent duplicate analysis
+- **Short-term memory**: Maintains context during the current run
+- **Long-term memory**: Persists knowledge across runs using SQLite
+- **Entity memory**: Tracks specific companies and entities so they are not analyzed twice
 
 ## Features
 
-- **Multi-Agent Collaboration**: Three specialized agents working together with a manager coordinating tasks
-- **Advanced Memory Systems**:
+- **Multi-agent collaboration**: Three specialized agents work together while a manager coordinates tasks
+- **Advanced memory systems**:
   - Short-term memory for recent context
   - Long-term memory for persistent knowledge
   - Entity memory for tracking companies and entities
-- **Intelligent Web Search**: Real-time internet search capabilities using Serper API
-- **Structured Output**: Pydantic models ensure consistent, validated data structures
-- **Push Notifications**: Optional push notification support via Pushover API
-- **Sector-Specific Analysis**: Configurable sector focus (default: Technology)
-- **Comprehensive Reports**: Generates JSON and Markdown reports with detailed analysis
-- **Duplicate Prevention**: Agents remember previously analyzed companies to avoid repetition
+- **Intelligent web search**: Real-time internet search using the Serper API
+- **Structured outputs**: Pydantic models ensure consistent, validated data structures
+- **Push notifications**: Optional push notification support via Pushover API
+- **Sector-specific analysis**: Configurable sector focus (default: Technology)
+- **Comprehensive reports**: Generates JSON and Markdown reports with detailed analysis
+- **Duplicate prevention**: Agents remember previously analyzed companies to avoid repetition
 
 ## Tech stack
 
 - **Framework**: [CrewAI](https://crewai.com) - Multi-agent AI orchestration
 - **Language**: Python 3.10 - 3.13
-- **LLM Providers**:
+- **LLM providers**:
   - OpenAI GPT-4o-mini (for agents)
   - OpenAI GPT-4o (for manager)
-- **Memory Storage**:
+- **Memory storage**:
   - SQLite (long-term memory)
-  - RAG Storage with OpenAI embeddings (short-term and entity memory)
+  - RAG storage with OpenAI embeddings (short-term and entity memory)
 - **Tools**:
   - SerperDevTool (web search)
   - PushNotificationTool (optional push notifications)
-- **Data Validation**: Pydantic v2
-- **Package Management**: UV (fast Python package installer)
+- **Data validation**: Pydantic v2
+- **Package management**: UV (fast Python package installer)
 
 ## Prerequisites
 
@@ -106,7 +109,7 @@ pip install uv
 
 ```bash
 git clone <repository-url>
-cd stock_picker
+cd stockpicker
 ```
 
 ### Step 3: Install dependencies
@@ -160,6 +163,10 @@ You should see:
 - `main.py` - Entry point
 - `config/` - Agent and task configurations
 - `tools/` - Custom tools
+
+## Disclaimer
+
+This tool is for research and educational purposes only. It does not provide investment advice. Always conduct your own due diligence before making investment decisions.
 
 ## Usage
 
@@ -298,7 +305,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-**Note**: This tool is for research and educational purposes. Always conduct your own due diligence before making investment decisions.
