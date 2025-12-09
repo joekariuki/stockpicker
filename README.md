@@ -38,7 +38,7 @@ StockPicker runs a sequential workflow with four specialized agents and a manage
 - Evaluates investment potential for each company
 - Generates detailed research reports
 
-### 3. Stock Picker Agent (Stock Picker from Research)
+### 3. Stock Picker Agent
 
 - Synthesizes all research findings
 - Selects the best investment opportunity

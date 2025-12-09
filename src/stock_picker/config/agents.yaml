@@ -23,7 +23,7 @@ financial_researcher:
 
 stock_picker:
   role: >
-    Stock Picker from Research
+    Stock Picker
   goal: >
     Given a list of researched companies with investment potential, you select the best one for investment,
     notifying the user and then providing a detailed report. Don't pick the same company twice.
